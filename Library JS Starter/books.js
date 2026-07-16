@@ -1,15 +1,15 @@
 let books;
 
-booksWrapper.body.classlist += ' books__loading'
-
-if (!books) {
-  books = await getBooks();
-}
-
-booksWrapper.classlist.remove('books__loading') 
-
-function renderBooks(filter) {
+async function renderBooks(filter) {
   const booksWrapper = document.querySelector(".books");
+
+  booksWrapper.classList.add("books__loading");
+
+  if (!books) {
+    books = await getBooks();
+  }
+
+  booksWrapper.classList.remove("books__loading");
 if (filter === "low_to_high") {
   books.sort((a, b) => (a.salePrice || a.originalPrice) - (b.salePrice || b.originalPrice));
   }
@@ -72,7 +72,7 @@ setTimeout(() => {
 function getBooks() {
   return new Promise((resolve) => {
  setTimeout(() => {
-   resolved([
+   resolve([
     {
       id: 1,
       title: "Crack the Coding Interview",
